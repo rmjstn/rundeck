@@ -323,6 +323,7 @@ public class JettyCachingLdapLoginModule extends AbstractLoginModule {
      */
     @SuppressWarnings("unchecked")
     private String getUserCredentials(String username) throws LoginException {
+	    LOG.info("Remy 0");
         String ldapCredential = null;
 
         SearchControls ctls = new SearchControls();
@@ -334,9 +335,21 @@ public class JettyCachingLdapLoginModule extends AbstractLoginModule {
 
 
         try {
+		    LOG.info("Remy 1");
             Object[] filterArguments = { _userObjectClass, _userIdAttribute, username };
+			LOG.info("Remy 2");
+			LOG.info("Remy 2 - _userBaseDn: " + _userBaseDn);
+			LOG.info("Remy 2 - filter: " + filter);
+			LOG.info("Remy 2 - filterArguments: " + Arrays.toString(filterArguments));
+			LOG.info("Remy 2 - ctls.getCountLimit(): " + ctls.getCountLimit());
+			LOG.info("Remy 2 - ctls.getDerefLinkFlag(): " + ctls.getDerefLinkFlag());
+			LOG.info("Remy 2 - ctls.getReturningAttributes(): " + Arrays.toString(ctls.getReturningAttributes()));
+			LOG.info("Remy 2 - ctls.getReturningObjFlag(): " + ctls.getReturningObjFlag());
+			LOG.info("Remy 2 - ctls.getSearchScope(): " + ctls.getSearchScope());
+			LOG.info("Remy 2 - ctls.getTimeLimit(): " + ctls.getTimeLimit());
             NamingEnumeration results = _rootContext.search(_userBaseDn, filter, filterArguments,
                     ctls);
+			LOG.info("Remy 3");					
 
             LOG.debug("Found user?: " + results.hasMoreElements());
 
