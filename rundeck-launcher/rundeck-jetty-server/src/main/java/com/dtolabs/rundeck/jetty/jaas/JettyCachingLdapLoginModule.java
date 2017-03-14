@@ -372,6 +372,7 @@ public class JettyCachingLdapLoginModule extends AbstractLoginModule {
                 }
             }
         } catch (NamingException e) {
+		    LOG.info("Remy 4 - e : " + e);
             throw new LoginException("Root context binding failure.");
         }
 
@@ -677,7 +678,9 @@ public class JettyCachingLdapLoginModule extends AbstractLoginModule {
             }
 
             if (_forceBindingLogin) {
+			    LOG.info("Remy 01 _forceBindingLogin=true");
                 return bindingLogin(webUserName, webCredential);
+				LOG.info("Remy 02 _forceBindingLogin=true");
             }
 
             // This sets read and the credential
@@ -740,7 +743,9 @@ public class JettyCachingLdapLoginModule extends AbstractLoginModule {
     @SuppressWarnings("unchecked")
     protected boolean bindingLogin(String username, Object password) throws LoginException,
             NamingException {
+		LOG.info("Remy 03 username : " + username);
         final String cacheToken = Credential.MD5.digest(username + ":" + password.toString());
+		LOG.info("Remy 04 cacheToken : " + cacheToken);
         if (_cacheDuration > 0) { // only worry about caching if there is a cacheDuration set.
             CachedUserInfo cached = USERINFOCACHE.get(cacheToken);
             if (cached != null) {
